@@ -1,0 +1,20 @@
+//
+//  JSEmoticonKeyboard.pch
+//  JSEmoticonKeyboardDemo
+//
+//  Created by 菅思博 on 17/1/12.
+//  Copyright © 2017年 菅思博. All rights reserved.
+//
+
+#ifndef JSEmoticonKeyboard_pch
+#define JSEmoticonKeyboard_pch
+
+#import <YYText/YYText.h>
+#import <YYImage/YYImage.h>
+#import "JSCategory.h"
+#import "JSBaseViewController.h"
+
+#define JSSCREEN_W  [UIScreen mainScreen].bounds.size.width
+#define JSSCREEN_H [UIScreen mainScreen].bounds.size.height
+
+#endif /* JSEmoticonKeyboard_pch */
