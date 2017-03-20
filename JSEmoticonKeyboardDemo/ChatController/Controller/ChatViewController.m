@@ -153,8 +153,8 @@ static NSString *identifier = @"ChatTableViewCell";
     
     chat.chatContent = plainString;
     chat.userType = userTypeOther;
-    chat.userHead = @"鸣人";
-    chat.userName = @"鸣人";
+    chat.userHead = @"发送者";
+    chat.userName = @"发送者";
     chat.userId = _dataSource.count;
     
     chatView.chat = chat;

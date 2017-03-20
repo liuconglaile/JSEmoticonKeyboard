@@ -12,9 +12,9 @@
 - (void)setUserType:(userType)userType {
     _userType = userType;
     
-    _userHead = userType == userTypeMe ? @"路飞" : @"鸣人";
+    _userHead = userType == userTypeMe ? @"接收者" : @"发送者";
     
-    _userName = userType == userTypeMe ? @"路飞" : @"";
+    _userName = userType == userTypeMe ? @"接收者" : @"";
 }
 
 @end
