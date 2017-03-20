@@ -19,4 +19,4 @@ spirit-jsb，spirit1437419996@163.com
 
 ## 许可协议
 
-JSNetworking 遵循 MIT 开源许可证，详情请查看 LICENSE 文件
+JSEmoticonKeyboard 遵循 MIT 开源许可证，详情请查看 LICENSE 文件
