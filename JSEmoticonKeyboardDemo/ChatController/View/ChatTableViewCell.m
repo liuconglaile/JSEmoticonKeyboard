@@ -62,10 +62,7 @@
         _userHeadImageView = [[UIImageView alloc] init];
         
         _userHeadImageView.backgroundColor = [UIColor js_colorWithHexString:@"#EEEEEE"];
-        
-        _userHeadImageView.layer.cornerRadius = 20.0f;
-        _userHeadImageView.layer.masksToBounds = YES;
-        
+  
         _userHeadImageView.userInteractionEnabled = YES;
     }
     
@@ -125,7 +122,7 @@
     _chatContentLabel.frame = chatView.chatContentFrame;
     _airButton.frame = chatView.airFrame;
 
-    _userHeadImageView.image = [UIImage imageNamed:chatView.chat.userHead];
+    _userHeadImageView.image = [[UIImage imageNamed:chatView.chat.userHead] js_imageByRoundCornerRadius:125.0f];
     _userNameLabel.text = chatView.chat.userName;
 
     NSString *normalImageName = chatView.chat.userType == userTypeOther ? @"Chat_Send_Normal" : @"Chat_Receive_Normal";
