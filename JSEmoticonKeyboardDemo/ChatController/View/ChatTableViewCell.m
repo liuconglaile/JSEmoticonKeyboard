@@ -8,6 +8,8 @@
 
 #import "ChatTableViewCell.h"
 
+#import "JSEmoticonKeyboardView.h"
+
 @interface ChatTableViewCell ()
 
 @property (nonatomic, strong) UIImageView *userHeadImageView;
@@ -17,7 +19,10 @@
 
 @end
 
-@implementation ChatTableViewCell
+@implementation ChatTableViewCell {
+    JSEmoticonKeyboardView *_keyboard;
+}
+
 #pragma mark Instancetype
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier {
@@ -27,7 +32,10 @@
         self.backgroundColor = [UIColor js_colorWithHexString:@"#EEEEEE"];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
+        _keyboard = [JSEmoticonKeyboardView defaultEmoticonKeyboard];
+        
         [self createSubviews];
+        [self createLongPressGestureRecognizer];
     }
     
     return self;
@@ -41,10 +49,19 @@
     [self addSubview:self.chatContentLabel];
 }
 
+#pragma mark Create LongPressGestureRecognizer
+- (void)createLongPressGestureRecognizer {
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                                                                             action:@selector(showMenuController:)];
+    [_airButton addGestureRecognizer:longPressGestureRecognizer];
+}
+
 #pragma mark Lazy
 - (UIImageView *)userHeadImageView {
     if (!_userHeadImageView) {
         _userHeadImageView = [[UIImageView alloc] init];
+        
+        _userHeadImageView.backgroundColor = [UIColor js_colorWithHexString:@"#EEEEEE"];
         
         _userHeadImageView.layer.cornerRadius = 20.0f;
         _userHeadImageView.layer.masksToBounds = YES;
@@ -76,7 +93,7 @@
         _chatContentLabel.numberOfLines = 0;
         
         _chatContentLabel.textVerticalAlignment = YYTextVerticalAlignmentCenter;
-        
+                
         _chatContentLabel.userInteractionEnabled = NO;
     }
     
@@ -107,12 +124,12 @@
     _userNameLabel.frame = chatView.userNameFrame;
     _chatContentLabel.frame = chatView.chatContentFrame;
     _airButton.frame = chatView.airFrame;
-    
+
     _userHeadImageView.image = [UIImage imageNamed:chatView.chat.userHead];
     _userNameLabel.text = chatView.chat.userName;
 
-    NSString *normalImageName = chatView.chat.userType == userTypeOther ? @"chat_send_nor" : @"chat_receive_nor";
-    NSString *selectedImageName = chatView.chat.userType == userTypeOther ? @"chat_send_p" : @"chat_receive_p";
+    NSString *normalImageName = chatView.chat.userType == userTypeOther ? @"Chat_Send_Normal" : @"Chat_Receive_Normal";
+    NSString *selectedImageName = chatView.chat.userType == userTypeOther ? @"Chat_Send_Selected" : @"Chat_Receive_Selected";
     
     UIImage *normalImage = [self resizebleImageWithName:normalImageName];
     UIImage *selectedImage = [self resizebleImageWithName:selectedImageName];
@@ -125,6 +142,80 @@
     _chatContentLabel.attributedText = chatView.attributedChatString;
 }
 
+- (void)showMenuController:(UIGestureRecognizer *)gestureRecognizer {
+    UIMenuController *menuController = [UIMenuController sharedMenuController];
+
+    [self becomeFirstResponder];
+        
+    UIMenuItem *menuItemWithCopy = [[UIMenuItem alloc] initWithTitle:@"复制"
+                                                              action:@selector(copyChat)];
+    UIMenuItem *menuItemWithTranspond = [[UIMenuItem alloc] initWithTitle:@"转发"
+                                                                   action:@selector(transpondChat)];
+    UIMenuItem *menuItemWithCollect = [[UIMenuItem alloc] initWithTitle:@"收藏"
+                                                                 action:@selector(collectChat)];
+    UIMenuItem *menuItemWithRecall = [[UIMenuItem alloc] initWithTitle:@"撤回"
+                                                                action:@selector(recallChat)];
+    UIMenuItem *menuItemWithDelete = [[UIMenuItem alloc] initWithTitle:@"删除"
+                                                                action:@selector(deleteChat)];
+    
+    [menuController setMenuItems:@[
+                                   menuItemWithCopy,
+                                   menuItemWithTranspond,
+                                   menuItemWithCollect,
+                                   menuItemWithRecall,
+                                   menuItemWithDelete
+                                   ]];
+        
+    CGRect rect = [_airButton convertRect:_airButton.bounds
+                                   toView:self.superview];
+        
+    CGFloat menuItemY = 0.0f;
+        
+    if (rect.origin.y < 64.0f) {
+        menuItemY = CGRectGetMaxY(_airButton.frame) - 6.0f;
+            
+        menuController.arrowDirection = UIMenuControllerArrowUp;
+    }
+    else {
+        menuItemY = _airButton.js_top + 6.0f;
+            
+        menuController.arrowDirection = UIMenuControllerArrowDown;
+    }
+        
+    CGRect menuLocation = CGRectMake(_airButton.center.x, menuItemY, 0.0f, 0.0f);
+        
+    [menuController setTargetRect:menuLocation
+                           inView:self];
+        
+    [menuController setMenuVisible:YES
+                          animated:YES];
+}
+
+- (void)copyChat {
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    
+    pasteboard.string = _chatView.chat.chatContent;
+}
+
+- (void)transpondChat {
+    NSLog(@"转发");
+}
+
+- (void)collectChat {
+    NSLog(@"收藏");
+}
+
+- (void)recallChat {
+    NSLog(@"撤回");
+}
+
+- (void)deleteChat {
+    if (self.deleteChatBlock) {
+        self.deleteChatBlock(_chatView);
+    }
+}
+
+#pragma mark 私有方法
 - (UIImage *)resizebleImageWithName:(NSString *)imageName {
     UIImage *image = [UIImage imageNamed:imageName];
     
@@ -135,6 +226,19 @@
                                         resizingMode:UIImageResizingModeStretch];
     
     return image;
+}
+
+- (BOOL)canPerformAction:(SEL)action
+              withSender:(id)sender {
+    if (action == @selector(copyChat) || action == @selector(transpondChat) || action == @selector(collectChat) || action == @selector(recallChat) || action == @selector(deleteChat)){
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
 }
 
 @end

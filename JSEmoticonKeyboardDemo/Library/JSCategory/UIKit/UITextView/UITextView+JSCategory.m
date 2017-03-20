@@ -30,6 +30,8 @@ static NSString *LIMITLENGTHLABEL = @"limitLengthLabel";
 static NSString *PLACEHOLDER = @"placeholder";
 static NSString *LIMITLENGTH = @"limitLength";
 
+static NSString *JS_INPUTNEXTRESPONDER = @"js_inputNextResponder";
+
 #pragma mark Set / Get
 - (void)setPlaceholderLabel:(UILabel *)placeholderLabel {
     objc_setAssociatedObject(self, &PLACEHOLDERLABEL, placeholderLabel, OBJC_ASSOCIATION_RETAIN_NONATOMIC);

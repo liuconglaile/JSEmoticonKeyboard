@@ -136,7 +136,7 @@ static NSString *const _regexString = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
         NSData *data = [NSData dataWithContentsOfFile:path];
         
         YYImage *image = [YYImage imageWithData:data
-                                          scale:2];
+                                          scale:2.0f];
         
         image.preloadAllAnimatedImageFrames = YES;
         

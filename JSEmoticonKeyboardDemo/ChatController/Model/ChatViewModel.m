@@ -47,13 +47,13 @@
     
     CGFloat airX = chat.userType ? JSSCREEN_W - margin * 2 - headWidth - layout.textBoundingSize.width - AllMargin : margin * 2 + headWidth;
     
-    self.airFrame = CGRectMake(airX, 35.0f, layout.textBoundingSize.width + 31.0f, layout.textBoundingSize.height + 16.0f);
+    _airFrame = CGRectMake(airX, 35.0f, layout.textBoundingSize.width + 31.0f, (layout.textBoundingSize.height < 28.0f ? 28.0f : layout.textBoundingSize.height) + 16.0f);
     
     CGFloat contentX = chat.userType ? JSSCREEN_W - margin * 2 - headWidth - layout.textBoundingSize.width - 18.0f : margin * 2 + headWidth + 20.0f;
     
-    _chatContentFrame = CGRectMake(contentX, 43.0f, layout.textBoundingSize.width, layout.textBoundingSize.height);
+    _chatContentFrame = CGRectMake(contentX, layout.textBoundingSize.height < 28.0f ? 48.0f : 43.0f, layout.textBoundingSize.width, layout.textBoundingSize.height);
     
-    _cellHeight = CGRectGetMaxY(_chatContentFrame) + margin;
+    _cellHeight = CGRectGetMaxY(_airFrame) + margin;
 }
 
 @end

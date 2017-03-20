@@ -14,4 +14,6 @@
 
 @property (nonatomic, strong) ChatViewModel *chatView;
 
+@property (nonatomic, copy) void(^deleteChatBlock)(ChatViewModel *viewModel);
+
 @end

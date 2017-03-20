@@ -120,6 +120,13 @@ static NSString *identifier = @"ChatTableViewCell";
 #pragma mark Action
 - (void)chatListTap {
     [JSEmoticonKeyboardView hideEmoticonKeyboardViewInView:self.view];
+    
+    UIMenuController *menuController = [UIMenuController sharedMenuController];
+    
+    if (menuController.menuVisible) {
+        [menuController setMenuVisible:NO
+                              animated:YES];
+    }
 }
 
 //  滚动到底部
@@ -168,6 +175,8 @@ static NSString *identifier = @"ChatTableViewCell";
 - (void)js_updateSuperView {
     [UIView animateWithDuration:0.3f animations:^{
         _chatList.js_height = _keyboard.js_top - 64.0f;
+        
+        [self scrollTableViewToBottom];
     }];
 }
 
@@ -187,6 +196,18 @@ static NSString *identifier = @"ChatTableViewCell";
                                         reuseIdentifier:identifier];
     
     cell.chatView = chatView;
+        
+    [cell setDeleteChatBlock:^(ChatViewModel *viewModel) {
+        NSUInteger index = [_dataSource indexOfObject:viewModel];
+        
+        [_dataSource removeObject:viewModel];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index
+                                                    inSection:0];
+        
+        [_chatList deleteRowsAtIndexPaths:@[indexPath]
+                         withRowAnimation:UITableViewRowAnimationNone];
+    }];
 
     return cell;
 }
@@ -196,6 +217,16 @@ static NSString *identifier = @"ChatTableViewCell";
     ChatViewModel *chatView = [_dataSource objectAtIndex:indexPath.row];
     
     return chatView.cellHeight;
+}
+
+#pragma mark UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    UIMenuController *menuController = [UIMenuController sharedMenuController];
+    
+    if (menuController.menuVisible) {
+        [menuController setMenuVisible:NO
+                              animated:YES];
+    }
 }
 
 #pragma mark Action

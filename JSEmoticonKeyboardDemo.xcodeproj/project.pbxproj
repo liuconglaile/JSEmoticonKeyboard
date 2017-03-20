@@ -763,8 +763,8 @@
 				FD2602351E2ADE0200F53120 /* JSEmoticonPageView */,
 				FD7951D21E2C139900C92367 /* JSEmoticonToolBarView */,
 				FDBE55041E7C0B4200688094 /* JSEmoticonTopBarView */,
-				FD2601391E29205E00F53120 /* Resource */,
 				FD22E37B1E7E62200062C48E /* Other */,
+				FD2601391E29205E00F53120 /* Resource */,
 			);
 			path = JSEmoticonKeyboard;
 			sourceTree = "<group>";

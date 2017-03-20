@@ -323,6 +323,8 @@
 
 - (void)keyboardWillHide:(NSNotification *)notification {
     _emoticonTopBarView.currentKeyboardHeight = _emoticonCollectionView.js_height + _emoticonPageView.js_height + _emoticonToolBarView.js_height;
+    
+    [self changeEmoticonKeyboardView];
 }
 
 - (void)resetEmoticonTextView {
