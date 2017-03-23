@@ -866,7 +866,6 @@
 				TargetAttributes = {
 					FDC787731E25489300A8257F = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = DX7EW46SK8;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1215,7 +1214,7 @@
 			baseConfigurationReference = 95DF2EC6573BD93E935143A9 /* Pods-JSEmoticonKeyboardDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = DX7EW46SK8;
+				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/JSEmoticonKeyboard/JSEmoticonKeyboard.pch";
 				INFOPLIST_FILE = JSEmoticonKeyboardDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1230,7 +1229,7 @@
 			baseConfigurationReference = 94174228F10A35D03AF35AB0 /* Pods-JSEmoticonKeyboardDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = DX7EW46SK8;
+				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/JSEmoticonKeyboard/JSEmoticonKeyboard.pch";
 				INFOPLIST_FILE = JSEmoticonKeyboardDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
